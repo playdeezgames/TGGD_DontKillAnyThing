@@ -14,7 +14,7 @@ Public Module Game
         Return New Location(locationId)
     End Function
     Private Sub CreatePlayerCharacter(location As Location)
-        Dim characterId = CharacterData.Create(location.Id)
+        Dim characterId = CharacterData.Create(location.Id, CharacterType.Player)
         PlayerData.SetCharacterId(characterId)
     End Sub
     Sub Start()

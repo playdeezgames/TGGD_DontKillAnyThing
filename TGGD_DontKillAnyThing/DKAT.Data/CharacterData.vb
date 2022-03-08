@@ -6,14 +6,16 @@
             (
                 [CharacterId] INTEGER PRIMARY KEY AUTOINCREMENT,
                 [LocationId] INT NOT NULL,
+                [CharacterType] INT NOT NULL,
                 FOREIGN KEY ([LocationId]) REFERENCES [Locations]([LocationId])
             );")
     End Sub
-    Function Create(locationId As Long) As Long
+    Function Create(locationId As Long, characterType As Long) As Long
         Initialize()
         Using command = CreateCommand(
-            "INSERT INTO [Characters]([LocationId]) VALUES(@LocationId);",
-            MakeParameter("@LocationId", locationId))
+            "INSERT INTO [Characters]([LocationId],[CharacterType]) VALUES(@LocationId,@CharacterType);",
+            MakeParameter("@LocationId", locationId),
+            MakeParameter("@CharacterType", characterType))
             command.ExecuteNonQuery()
         End Using
         Return LastInsertRowId
