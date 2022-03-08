@@ -3,6 +3,7 @@ Public Class Location
     ReadOnly Property Id As Long
     Sub New(locationId As Long)
         Id = locationId
+        'TODO: populate the location as needed
     End Sub
     ReadOnly Property Doors As List(Of Door)
         Get

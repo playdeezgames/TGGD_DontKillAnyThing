@@ -28,7 +28,7 @@
             End Using
         End Using
     End Function
-    Function Create(fromLocationId As Long, direction As Integer, toLocationId As Long) As Long
+    Function Create(fromLocationId As Long, direction As Long, toLocationId As Long) As Long
         Initialize()
         Using command = CreateCommand(
             "INSERT INTO [Doors]([FromLocationId],[Direction],[ToLocationId]) VALUES(@FromLocationId,@Direction,@ToLocationId);",
@@ -37,6 +37,12 @@
             MakeParameter("@ToLocationId", toLocationId))
             command.ExecuteNonQuery()
             Return LastInsertRowId
+        End Using
+    End Function
+    Function ReadDirection(doorId As Long) As Long?
+        Initialize()
+        Using command = CreateCommand("SELECT [Direction] FROM [Doors] WHERE [DoorId]=@DoorId;", MakeParameter("@DoorId", doorId))
+            Return ExecuteScalar(Of Long)(command)
         End Using
     End Function
 End Module

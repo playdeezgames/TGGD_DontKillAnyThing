@@ -14,7 +14,7 @@ Module InPlay
         Dim doors = location.Doors
         builder.AppendLine($"Doors:")
         For Each door In doors
-            builder.AppendLine($"{door.Id}")
+            builder.AppendLine($"{door.Id} {door.Direction.Name}")
         Next
         output.Text = builder.ToString()
     End Sub
