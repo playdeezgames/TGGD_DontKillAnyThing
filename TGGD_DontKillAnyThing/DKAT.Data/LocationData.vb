@@ -4,6 +4,7 @@
             "CREATE TABLE IF NOT EXISTS [Locations]
             (
                 [LocationId] INTEGER PRIMARY KEY AUTOINCREMENT,
+                [LocationType] INT NOT NULL,
                 [Populated] INT NOT NULL
             );")
     End Sub
@@ -15,9 +16,13 @@
             End Using
         End Get
     End Property
-    Function Create() As Long
+    Function Create(locationType As Long) As Long
         Initialize()
-        ExecuteNonQuery("INSERT INTO [Locations]([Populated]) VALUES(0);")
+        Using command = CreateCommand(
+            "INSERT INTO [Locations]([Populated],[LocationType]) VALUES(0,@LocationType);",
+            MakeParameter("@LocationType", locationType))
+            command.ExecuteNonQuery()
+        End Using
         Return LastInsertRowId
     End Function
     Sub SetPopulated(locationId As Long, populated As Boolean)
@@ -37,6 +42,18 @@
             Dim result = command.ExecuteScalar
             If result IsNot Nothing Then
                 Return CBool(result)
+            End If
+            Return Nothing
+        End Using
+    End Function
+    Function ReadLocationType(locationId As Long) As Long?
+        Initialize()
+        Using command = CreateCommand(
+            "SELECT [LocationType] FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+            Dim result = command.ExecuteScalar
+            If result IsNot Nothing Then
+                Return CLng(result)
             End If
             Return Nothing
         End Using

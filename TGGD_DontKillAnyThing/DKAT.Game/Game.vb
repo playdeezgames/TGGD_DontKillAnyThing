@@ -1,11 +1,11 @@
 Imports DKAT.Data
 Public Module Game
     Private Sub SpawnLocation(fromLocationId As Long, direction As Direction)
-        Dim toLocationId = LocationData.Create
+        Dim toLocationId = LocationData.Create(GenerateLocationType)
         DoorData.Create(fromLocationId, direction, toLocationId)
     End Sub
     Private Function CreateStartingLocation() As Location
-        Dim locationId = LocationData.Create
+        Dim locationId = LocationData.Create(GenerateLocationType)
         SpawnLocation(locationId, Direction.North)
         SpawnLocation(locationId, Direction.East)
         SpawnLocation(locationId, Direction.South)

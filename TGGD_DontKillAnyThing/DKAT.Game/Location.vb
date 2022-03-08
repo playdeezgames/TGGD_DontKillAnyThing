@@ -15,7 +15,7 @@ Public Class Location
                 doorCount = 1
             End If
             While doorCount > 0
-                Dim locationId = LocationData.Create()
+                Dim locationId = LocationData.Create(GenerateLocationType)
                 Dim direction = RNG.FromGenerator(directions)
                 directions.Remove(direction)
                 Dim doorId = DoorData.Create(Id, direction, locationId)
@@ -33,6 +33,11 @@ Public Class Location
             Return DoorData.ReadForFromLocation(Id).Select(Function(doorId)
                                                                Return New Door(doorId)
                                                            End Function).ToList()
+        End Get
+    End Property
+    ReadOnly Property LocationType As LocationType
+        Get
+            Return CType(LocationData.ReadLocationType(Id).Value, LocationType)
         End Get
     End Property
     Function GetDoor(direction As Direction) As Door
