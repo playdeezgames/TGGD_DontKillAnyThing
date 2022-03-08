@@ -1,9 +1,16 @@
 Imports DKAT.Data
 Public Module Game
-    Private Function CreateSpawnLocation() As Location
+    Private Sub SpawnLocation(fromLocationId As Long, direction As Direction)
+        Dim toLocationId = LocationData.Create
+        DoorData.Create(fromLocationId, direction, toLocationId)
+    End Sub
+    Private Function CreateStartingLocation() As Location
         Dim locationId = LocationData.Create
-        'TODO: create four other locations connected to spawn
-        'TODO: set spawn location to populated
+        SpawnLocation(locationId, Direction.North)
+        SpawnLocation(locationId, Direction.East)
+        SpawnLocation(locationId, Direction.South)
+        SpawnLocation(locationId, Direction.West)
+        LocationData.SetPopulated(locationId, True)
         Return New Location(locationId)
     End Function
     Private Sub CreatePlayerCharacter(location As Location)
@@ -12,7 +19,7 @@ Public Module Game
     End Sub
     Sub Start()
         Store.Reset()
-        Dim location = CreateSpawnLocation()
+        Dim location = CreateStartingLocation()
         CreatePlayerCharacter(location)
     End Sub
     Sub Finish()

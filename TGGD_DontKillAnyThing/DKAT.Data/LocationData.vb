@@ -12,4 +12,13 @@
         ExecuteNonQuery("INSERT INTO [Locations]([Populated]) VALUES(0);")
         Return LastInsertRowId
     End Function
+    Sub SetPopulated(locationId As Long, populated As Boolean)
+        Initialize()
+        Using command = CreateCommand(
+            "UPDATE [Locations] SET [Populated]=@Populated WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId),
+            MakeParameter("@Populated", populated))
+            command.ExecuteNonQuery()
+        End Using
+    End Sub
 End Module

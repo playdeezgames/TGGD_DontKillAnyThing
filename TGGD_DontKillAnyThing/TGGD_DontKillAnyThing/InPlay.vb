@@ -11,6 +11,11 @@ Module InPlay
         builder.AppendLine($"Character Id: {character.Id}")
         Dim location = character.Location
         builder.AppendLine($"Location Id: {location.Id}")
+        Dim doors = location.Doors
+        builder.AppendLine($"Doors:")
+        For Each door In doors
+            builder.AppendLine($"{door.Id}")
+        Next
         output.Text = builder.ToString()
     End Sub
     Private Sub UpdateActions()
