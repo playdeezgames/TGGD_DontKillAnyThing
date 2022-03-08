@@ -7,9 +7,20 @@ Public Class Location
             Dim existingDoors = DoorData.ReadForToLocation(Id)
             For Each existingDoor In existingDoors
                 Dim direction = CType(DoorData.ReadDirection(existingDoor).Value, Direction)
+                directions.Remove(direction.Opposite)
                 DoorData.Create(Id, direction.Opposite, DoorData.ReadFromLocation(existingDoor).Value)
             Next
-            'TODO: make 0..N new doors. if this is the last unattached location, make at least one door
+            Dim doorCount = RNG.FromRange(0, directions.Count)
+            If doorCount = 0 AndAlso LocationData.UnpopulatedCount < 2 Then
+                doorCount = 1
+            End If
+            While doorCount > 0
+                Dim locationId = LocationData.Create()
+                Dim direction = RNG.FromGenerator(directions)
+                directions.Remove(direction)
+                Dim doorId = DoorData.Create(Id, direction, locationId)
+                doorCount -= 1
+            End While
             LocationData.SetPopulated(Id, True)
         End If
     End Sub

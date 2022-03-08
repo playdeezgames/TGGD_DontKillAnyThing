@@ -7,6 +7,14 @@
                 [Populated] INT NOT NULL
             );")
     End Sub
+    ReadOnly Property UnpopulatedCount As Long
+        Get
+            Initialize()
+            Using command = CreateCommand("SELECT COUNT(1) FROM [Locations] WHERE [Populated]=0;")
+                Return CLng(command.ExecuteScalar)
+            End Using
+        End Get
+    End Property
     Function Create() As Long
         Initialize()
         ExecuteNonQuery("INSERT INTO [Locations]([Populated]) VALUES(0);")

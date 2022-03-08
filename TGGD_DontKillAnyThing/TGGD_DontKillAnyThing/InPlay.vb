@@ -9,14 +9,13 @@ Module InPlay
         output.Clear()
         Dim builder As New StringBuilder
         Dim character As New PlayerCharacter()
-        builder.AppendLine($"Character Id: {character.Id}")
+        builder.AppendLine($"Yer alive, and you ain't killed anything yet!")
         Dim location = character.Location
-        builder.AppendLine($"Location Id: {location.Id}")
         Dim doors = location.Doors
         builder.AppendLine($"Exits:")
-        For Each door In doors
-            builder.AppendLine($"{door.Direction.Name}")
-        Next
+        builder.AppendJoin(", ", doors.Select(Function(door)
+                                                  Return $"{door.Direction.Name}"
+                                              End Function))
         output.Text = builder.ToString()
     End Sub
     Private Function MoveDirection(direction As Direction) As Action
