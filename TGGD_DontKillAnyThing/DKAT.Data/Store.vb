@@ -40,4 +40,11 @@ Public Module Store
             End Using
         End Get
     End Property
+    Function ExecuteScalar(Of TResult As Structure)(command As SqliteCommand) As TResult?
+        Dim result = command.ExecuteScalar
+        If result IsNot Nothing Then
+            Return CType(result, TResult?)
+        End If
+        Return Nothing
+    End Function
 End Module

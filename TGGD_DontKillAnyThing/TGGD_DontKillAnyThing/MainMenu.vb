@@ -1,5 +1,5 @@
 ﻿Imports Terminal.Gui
-
+Imports DKAT.Game
 Module MainMenu
     Private Function ConfirmQuit() As Boolean
         If MessageBox.Query("Confirm Choice", "Are you sure you want to quit?", "No", "Yes") = 1 Then
@@ -22,6 +22,10 @@ Module MainMenu
             menu.SetSource(New List(Of String) From {"Embark!", "Quit"})
             AddHandler menu.OpenSelectedItem, Sub(args)
                                                   Select Case CStr(args.Value)
+                                                      Case "Embark!"
+                                                          Game.Start()
+                                                          InPlay.Run()
+                                                          Game.Finish()
                                                       Case "Quit"
                                                           done = ConfirmQuit()
                                                   End Select
