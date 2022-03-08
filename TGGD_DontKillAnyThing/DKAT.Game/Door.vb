@@ -10,4 +10,9 @@ Public Class Door
             Return CType(DoorData.ReadDirection(Id).Value, Direction)
         End Get
     End Property
+    ReadOnly Property ToLocation As Location
+        Get
+            Return New Location(DoorData.ReadToLocation(Id).Value)
+        End Get
+    End Property
 End Class

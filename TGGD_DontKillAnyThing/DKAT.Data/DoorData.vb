@@ -28,6 +28,20 @@
             End Using
         End Using
     End Function
+    Function ReadForToLocation(fromLocationId As Long) As List(Of Long)
+        Initialize()
+        Using command = CreateCommand(
+            "SELECT [DoorId] FROM [Doors] WHERE [ToLocationId]=@LocationId",
+            MakeParameter("@LocationId", fromLocationId))
+            Using reader = command.ExecuteReader
+                Dim result As New List(Of Long)
+                While reader.Read
+                    result.Add(CLng(reader("DoorId")))
+                End While
+                Return result
+            End Using
+        End Using
+    End Function
     Function Create(fromLocationId As Long, direction As Long, toLocationId As Long) As Long
         Initialize()
         Using command = CreateCommand(
@@ -42,6 +56,18 @@
     Function ReadDirection(doorId As Long) As Long?
         Initialize()
         Using command = CreateCommand("SELECT [Direction] FROM [Doors] WHERE [DoorId]=@DoorId;", MakeParameter("@DoorId", doorId))
+            Return ExecuteScalar(Of Long)(command)
+        End Using
+    End Function
+    Function ReadToLocation(doorId As Long) As Long?
+        Initialize()
+        Using command = CreateCommand("SELECT [ToLocationId] FROM [Doors] WHERE [DoorId]=@DoorId;", MakeParameter("@DoorId", doorId))
+            Return ExecuteScalar(Of Long)(command)
+        End Using
+    End Function
+    Function ReadFromLocation(doorId As Long) As Long?
+        Initialize()
+        Using command = CreateCommand("SELECT [FromLocationId] FROM [Doors] WHERE [DoorId]=@DoorId;", MakeParameter("@DoorId", doorId))
             Return ExecuteScalar(Of Long)(command)
         End Using
     End Function

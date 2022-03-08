@@ -21,4 +21,16 @@
             command.ExecuteNonQuery()
         End Using
     End Sub
+    Function ReadPopulated(locationId As Long) As Boolean?
+        Initialize()
+        Using command = CreateCommand(
+            "SELECT [Populated] FROM [Locations] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+            Dim result = command.ExecuteScalar
+            If result IsNot Nothing Then
+                Return CBool(result)
+            End If
+            Return Nothing
+        End Using
+    End Function
 End Module

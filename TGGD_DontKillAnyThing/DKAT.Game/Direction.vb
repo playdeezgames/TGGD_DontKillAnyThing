@@ -22,4 +22,19 @@ Public Module DirectionExtensionMethods
                 Throw New NotImplementedException
         End Select
     End Function
+    <Extension()>
+    Function Opposite(direction As Direction) As Direction
+        Select Case direction
+            Case Direction.East
+                Return Direction.West
+            Case Direction.North
+                Return Direction.South
+            Case Direction.South
+                Return Direction.North
+            Case Direction.West
+                Return Direction.East
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
 End Module

@@ -26,4 +26,13 @@
             Return ExecuteScalar(Of Long)(command)
         End Using
     End Function
+    Sub WriteLocation(characterId As Long, locationId As Long)
+        Initialize()
+        Using command = CreateCommand(
+            "UPDATE [Characters] SET [LocationId]=@LocationId WHERE [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId),
+            MakeParameter("@LocationId", locationId))
+            command.ExecuteNonQuery()
+        End Using
+    End Sub
 End Module
