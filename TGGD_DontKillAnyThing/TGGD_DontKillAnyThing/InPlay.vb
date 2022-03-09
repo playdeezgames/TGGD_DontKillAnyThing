@@ -41,6 +41,8 @@ Module InPlay
                    Dim npc As New Character(characterId)
                    Dim attackResult = character.Attack(npc)
                    MessageBox.ErrorQuery("HUZZAH!", attackResult, "Ok")
+                   UpdateOutput()
+                   UpdateActions()
                End Sub
     End Function
     Private Sub UpdateActions()

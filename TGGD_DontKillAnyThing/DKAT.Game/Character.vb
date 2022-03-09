@@ -53,7 +53,17 @@ Public Class Character
         Else
             builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.MissVerb} {enemy.CharacterType.Name}")
         End If
-        'TODO: attack response
+        Select Case enemy.CharacterType.DetermineReaction
+            Case AttackReaction.RunAway
+                builder.AppendLine($"{enemy.CharacterType.Name} {enemy.CharacterType.RunVerb}")
+                enemy.RunAway()
+        End Select
         Return builder.ToString
     End Function
+    Sub RunAway()
+        Dim directions = New HashSet(Of Direction)(Location.Doors.Select(Function(door)
+                                                                             Return door.Direction
+                                                                         End Function))
+        MoveDirection(RNG.FromGenerator(directions))
+    End Sub
 End Class

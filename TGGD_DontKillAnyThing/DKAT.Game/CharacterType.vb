@@ -51,4 +51,23 @@ Public Module CharacterTypeExtension
             Return "misses"
         End If
     End Function
+    <Extension()>
+    Function RunVerb(characterType As CharacterType) As String
+        If characterType = CharacterType.Player Then
+            Return "run"
+        Else
+            Return "runs"
+        End If
+    End Function
+    <Extension()>
+    Function DetermineReaction(characterType As CharacterType) As AttackReaction
+        Select Case characterType
+            Case CharacterType.Player, CharacterType.None
+                Return AttackReaction.DoNothing
+            Case CharacterType.Bandit
+                Return AttackReaction.RunAway
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Function
 End Module

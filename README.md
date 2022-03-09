@@ -1,6 +1,13 @@
 # TGGD_DontKillAnyThing
-- Location
-- Character
-- Player
-- Directions
-- Doors
+- enemy responses to being attacked
+	- run
+	- counter attack
+- bandit steals when you move
+	- dex v dex?
+- items
+- inventories
+- foraging?
+	- each terrain gives its own foragable
+- crafting
+- merchants
+	- barter only?
