@@ -44,6 +44,14 @@ Public Module CharacterTypeExtension
         End If
     End Function
     <Extension()>
+    Function KillVerb(characterType As CharacterType) As String
+        If characterType = CharacterType.Player Then
+            Return "kill"
+        Else
+            Return "kills"
+        End If
+    End Function
+    <Extension()>
     Function MissVerb(characterType As CharacterType) As String
         If characterType = CharacterType.Player Then
             Return "miss"

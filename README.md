@@ -1,4 +1,7 @@
 # TGGD_DontKillAnyThing
+- damage to enemy
+- kill count
+- lose when kill count is not zero
 - enemy responses to being attacked
 	- run
 	- counter attack

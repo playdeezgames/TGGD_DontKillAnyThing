@@ -42,6 +42,20 @@ Public Class Character
         'TODO: factor in armor
         Return GetCharacteristic(CharacteristicType.Dexterity).Roll()
     End Function
+    Function RollDamage() As Long
+        Return Math.Max(0, GetCharacteristic(CharacteristicType.Strength).Roll())
+    End Function
+    Sub TakeDamage(damage As Long)
+        Throw New NotImplementedException
+    End Sub
+    ReadOnly Property IsDead As Boolean
+        Get
+            Throw New NotImplementedException
+        End Get
+    End Property
+    Sub AddKill()
+        Throw New NotImplementedException
+    End Sub
     Function Attack(enemy As Character) As String
         Dim builder As New StringBuilder
         builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.AttackVerb} {enemy.CharacterType.Name}")
@@ -49,7 +63,12 @@ Public Class Character
         Dim defendRoll = enemy.RollDefend()
         If attackRoll > defendRoll Then
             builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.HitVerb} {enemy.CharacterType.Name}")
-            'TODO: damage and perhaps kill
+            Dim damage = RollDamage()
+            enemy.TakeDamage(damage)
+            If enemy.IsDead Then
+                Me.AddKill()
+                builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.KillVerb} {enemy.CharacterType.Name}")
+            End If
         Else
             builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.MissVerb} {enemy.CharacterType.Name}")
         End If
