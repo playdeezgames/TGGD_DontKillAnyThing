@@ -35,12 +35,24 @@ Module InPlay
                    UpdateActions()
                End Sub
     End Function
+    Function AttackCharacter(characterId As Long) As Action
+        Return Sub()
+                   Dim character As New PlayerCharacter
+                   Dim npc As New Character(characterId)
+                   Dim attackResult = character.Attack(npc)
+                   MessageBox.ErrorQuery("HUZZAH!", attackResult, "Ok")
+               End Sub
+    End Function
     Private Sub UpdateActions()
         Dim actions As New List(Of InPlayAction)
         Dim character As New PlayerCharacter()
         Dim doors = character.Location.Doors
         For Each door In doors
             actions.Add(New InPlayAction($"Go {door.Direction.Name}", MoveDirection(door.Direction)))
+        Next
+        Dim npcs = character.Location.NonplayerCharacters
+        For Each npc In npcs
+            actions.Add(New InPlayAction($"Attack {npc.CharacterType.Name}", AttackCharacter(npc.Id)))
         Next
         actionMenu.SetSource(actions)
     End Sub

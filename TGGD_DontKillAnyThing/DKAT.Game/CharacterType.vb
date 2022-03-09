@@ -27,4 +27,12 @@ Public Module CharacterTypeExtension
                 Throw New NotImplementedException
         End Select
     End Function
+    <Extension()>
+    Function AttackVerb(characterType As CharacterType) As String
+        If characterType = CharacterType.Player Then
+            Return "attack"
+        Else
+            Return "attacks"
+        End If
+    End Function
 End Module

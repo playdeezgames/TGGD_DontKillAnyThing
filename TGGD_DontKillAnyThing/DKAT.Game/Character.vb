@@ -1,4 +1,5 @@
-﻿Imports DKAT.Data
+﻿Imports System.Text
+Imports DKAT.Data
 
 Public Class Character
     ReadOnly Property Id As Long
@@ -29,5 +30,11 @@ Public Class Character
             Return True
         End If
         Return False
+    End Function
+    Function Attack(enemy As Character) As String
+        Dim builder As New StringBuilder
+        builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.AttackVerb} {enemy.CharacterType.Name}")
+
+        Return builder.ToString
     End Function
 End Class
