@@ -31,10 +31,29 @@ Public Class Character
         End If
         Return False
     End Function
+    Function RollAttack() As Long
+        'TODO: factor in weapon
+        Return GetCharacteristic(CharacteristicType.Dexterity).Roll()
+    End Function
+    Function GetCharacteristic(characteristicType As CharacteristicType) As Characteristic
+        Return New Characteristic(Id, characteristicType)
+    End Function
+    Function RollDefend() As Long
+        'TODO: factor in armor
+        Return GetCharacteristic(CharacteristicType.Dexterity).Roll()
+    End Function
     Function Attack(enemy As Character) As String
         Dim builder As New StringBuilder
         builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.AttackVerb} {enemy.CharacterType.Name}")
-
+        Dim attackRoll = Me.RollAttack()
+        Dim defendRoll = enemy.RollDefend()
+        If attackRoll > defendRoll Then
+            builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.HitVerb} {enemy.CharacterType.Name}")
+            'TODO: damage and perhaps kill
+        Else
+            builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.MissVerb} {enemy.CharacterType.Name}")
+        End If
+        'TODO: attack response
         Return builder.ToString
     End Function
 End Class

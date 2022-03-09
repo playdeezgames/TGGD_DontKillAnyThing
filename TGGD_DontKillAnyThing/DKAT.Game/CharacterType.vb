@@ -8,7 +8,7 @@ End Enum
 Public Module CharacterTypeExtension
     Private ReadOnly characterTypeGenerator As New Dictionary(Of CharacterType, Integer) From
         {
-            {CharacterType.None, 18},
+            {CharacterType.None, 1},'18},
             {CharacterType.Bandit, 1}
         }
     Function GenerateCharacterType() As CharacterType
@@ -33,6 +33,22 @@ Public Module CharacterTypeExtension
             Return "attack"
         Else
             Return "attacks"
+        End If
+    End Function
+    <Extension()>
+    Function HitVerb(characterType As CharacterType) As String
+        If characterType = CharacterType.Player Then
+            Return "hit"
+        Else
+            Return "hits"
+        End If
+    End Function
+    <Extension()>
+    Function MissVerb(characterType As CharacterType) As String
+        If characterType = CharacterType.Player Then
+            Return "miss"
+        Else
+            Return "misses"
         End If
     End Function
 End Module

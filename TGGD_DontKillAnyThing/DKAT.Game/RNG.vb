@@ -22,6 +22,14 @@ Module RNG
     Function FromRange(minimum As Integer, maximum As Integer) As Integer
         Return random.Next(maximum - minimum + 1) + minimum
     End Function
+    Function FromDice(dieCount As Integer, dieSize As Integer) As Integer
+        Dim total = 0
+        While dieCount > 0
+            dieCount -= 1
+            total += FromRange(1, dieSize)
+        End While
+        Return total
+    End Function
 End Module
 Module DictionaryExtensions
     <Extension()>
