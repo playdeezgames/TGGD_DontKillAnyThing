@@ -21,6 +21,10 @@ Public Class Location
                 Dim doorId = DoorData.Create(Id, direction, locationId)
                 doorCount -= 1
             End While
+            Dim characterType = GenerateCharacterType()
+            If characterType <> CharacterType.None Then
+                CharacterData.Create(Id, characterType)
+            End If
             LocationData.SetPopulated(Id, True)
         End If
     End Sub
@@ -45,4 +49,16 @@ Public Class Location
                                          Return door.Direction = direction
                                      End Function)
     End Function
+    ReadOnly Property NonplayerCharacters As List(Of Character)
+        Get
+            Return CharacterData.
+                ReadForLocation(Id).
+                Select(Function(characterId)
+                           Return New Character(characterId)
+                       End Function).
+                       Where(Function(character)
+                                 Return character.CharacterType <> CharacterType.Player
+                             End Function).ToList
+        End Get
+    End Property
 End Class

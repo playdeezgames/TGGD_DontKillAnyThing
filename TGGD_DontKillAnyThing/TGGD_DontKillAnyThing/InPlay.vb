@@ -12,6 +12,14 @@ Module InPlay
         builder.AppendLine($"Yer alive, and you ain't killed anything yet!")
         Dim location = character.Location
         builder.AppendLine($"Terrain: {location.LocationType.Name}")
+        Dim npcs = location.NonplayerCharacters
+        If npcs.Any Then
+            builder.Append("Npcs: ")
+            builder.AppendJoin(", ", npcs.Select(Function(npc)
+                                                     Return npc.CharacterType.Name
+                                                 End Function))
+            builder.AppendLine()
+        End If
         Dim doors = location.Doors
         builder.AppendLine($"Exits:")
         builder.AppendJoin(", ", doors.Select(Function(door)

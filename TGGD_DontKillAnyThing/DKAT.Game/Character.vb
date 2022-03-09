@@ -13,6 +13,15 @@ Public Class Character
             CharacterData.WriteLocation(Id, value.Id)
         End Set
     End Property
+    ReadOnly Property CharacterType As CharacterType
+        Get
+            Dim result = CharacterData.ReadCharacterType(Id)
+            If result.HasValue Then
+                Return CType(result.Value, CharacterType)
+            End If
+            Return CharacterType.None
+        End Get
+    End Property
     Function MoveDirection(direction As Direction) As Boolean
         Dim door = Location.GetDoor(direction)
         If door IsNot Nothing Then

@@ -28,6 +28,14 @@
             Return ExecuteScalar(Of Long)(command)
         End Using
     End Function
+    Function ReadCharacterType(characterId As Long) As Long?
+        Initialize()
+        Using command = CreateCommand(
+            "SELECT [CharacterType] FROM [Characters] WHERE [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId))
+            Return ExecuteScalar(Of Long)(command)
+        End Using
+    End Function
     Sub WriteLocation(characterId As Long, locationId As Long)
         Initialize()
         Using command = CreateCommand(
@@ -37,4 +45,18 @@
             command.ExecuteNonQuery()
         End Using
     End Sub
+    Function ReadForLocation(locationId As Long) As List(Of Long)
+        Initialize()
+        Using command = CreateCommand(
+            "SELECT [CharacterId] FROM [Characters] WHERE [LocationId]=@LocationId;",
+            MakeParameter("@LocationId", locationId))
+            Using reader = command.ExecuteReader
+                Dim result As New List(Of Long)
+                While reader.Read()
+                    result.Add(CLng(reader("CharacterId")))
+                End While
+                Return result
+            End Using
+        End Using
+    End Function
 End Module
