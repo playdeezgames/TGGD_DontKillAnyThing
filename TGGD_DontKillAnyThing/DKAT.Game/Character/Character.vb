@@ -58,19 +58,19 @@ Public Class Character
     End Sub
     Function Attack(enemy As Character) As String
         Dim builder As New StringBuilder
-        builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.AttackVerb} {enemy.CharacterType.Name}")
-        Dim attackRoll = Me.RollAttack()
+        builder.AppendLine($"{CharacterType.Name} {CharacterType.AttackVerb} {enemy.CharacterType.Name}")
+        Dim attackRoll = RollAttack()
         Dim defendRoll = enemy.RollDefend()
         If attackRoll > defendRoll Then
-            builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.HitVerb} {enemy.CharacterType.Name}")
+            builder.AppendLine($"{CharacterType.Name} {CharacterType.HitVerb} {enemy.CharacterType.Name}")
             Dim damage = RollDamage()
             enemy.TakeDamage(damage)
             If enemy.IsDead Then
-                Me.AddKill()
-                builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.KillVerb} {enemy.CharacterType.Name}")
+                AddKill()
+                builder.AppendLine($"{CharacterType.Name} {CharacterType.KillVerb} {enemy.CharacterType.Name}")
             End If
         Else
-            builder.AppendLine($"{Me.CharacterType.Name} {Me.CharacterType.MissVerb} {enemy.CharacterType.Name}")
+            builder.AppendLine($"{CharacterType.Name} {CharacterType.MissVerb} {enemy.CharacterType.Name}")
         End If
         Select Case enemy.CharacterType.DetermineReaction
             Case AttackReaction.RunAway
