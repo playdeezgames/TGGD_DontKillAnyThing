@@ -11,7 +11,7 @@ Public Class Location
                 DoorData.Create(Id, direction.Opposite, DoorData.ReadFromLocation(existingDoor).Value)
             Next
             Dim doorCount = RNG.FromRange(0, directions.Count)
-            If doorCount = 0 AndAlso LocationData.UnpopulatedCount < 2 Then
+            If doorCount = 0 AndAlso LocationData.UnpopulatedCount = 1 Then
                 doorCount = 1
             End If
             While doorCount > 0
