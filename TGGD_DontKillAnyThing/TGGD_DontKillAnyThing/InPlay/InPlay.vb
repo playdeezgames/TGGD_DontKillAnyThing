@@ -50,17 +50,26 @@ Module InPlay
                    End If
                End Sub
     End Function
+    Private Sub ShowCharacteristics()
+        Dim builder As New StringBuilder
+        Dim character As New PlayerCharacter
+        For Each characteristicType In AllCharacteristicTypes
+            builder.AppendLine($"{characteristicType.Abbreviation}: {character.GetCharacteristic(characteristicType).Score}")
+        Next
+        MessageBox.Query("Characteristics:", builder.ToString(), "Ok")
+    End Sub
     Private Sub UpdateActions()
         Dim actions As New List(Of InPlayAction)
         Dim character As New PlayerCharacter()
-        Dim doors = character.Location.Doors
-        For Each door In doors
-            actions.Add(New InPlayAction($"Go {door.Direction.Name}", MoveDirection(door.Direction)))
-        Next
         Dim npcs = character.Location.NonplayerCharacters
         For Each npc In npcs
             actions.Add(New InPlayAction($"Attack {npc.CharacterType.Name}", AttackCharacter(npc.Id)))
         Next
+        Dim doors = character.Location.Doors
+        For Each door In doors
+            actions.Add(New InPlayAction($"Go {door.Direction.Name}", MoveDirection(door.Direction)))
+        Next
+        actions.Add(New InPlayAction("Characteristics...", AddressOf ShowCharacteristics))
         actionMenu.SetSource(actions)
     End Sub
     Private Sub HandleAction(args As ListViewItemEventArgs)
