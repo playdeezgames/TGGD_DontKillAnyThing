@@ -61,7 +61,7 @@ Public Class Location
                              End Function).ToList
         End Get
     End Property
-    Private forageGenerators As New Dictionary(Of LocationType, Dictionary(Of ItemType, Integer)) From
+    Private ReadOnly forageGenerators As New Dictionary(Of LocationType, Dictionary(Of ItemType, Integer)) From
         {
             {
                 LocationType.Desert,
@@ -74,35 +74,41 @@ Public Class Location
                 LocationType.Field,
                 New Dictionary(Of ItemType, Integer) From
                 {
-                    {ItemType.None, 1}
+                    {ItemType.None, 10},
+                    {ItemType.WildCarrot, 1}
                 }
             },
             {
                 LocationType.Forest,
                 New Dictionary(Of ItemType, Integer) From
                 {
-                    {ItemType.None, 1}
+                    {ItemType.None, 2},
+                    {ItemType.Stick, 1}
                 }
             },
             {
                 LocationType.Mountain,
                 New Dictionary(Of ItemType, Integer) From
                 {
-                    {ItemType.None, 1}
+                    {ItemType.None, 100},
+                    {ItemType.Rock, 10},
+                    {ItemType.OreNugget, 1}
                 }
             },
             {
                 LocationType.Pasture,
                 New Dictionary(Of ItemType, Integer) From
                 {
-                    {ItemType.None, 1}
+                    {ItemType.None, 5},
+                    {ItemType.Milkweed, 1}
                 }
             },
             {
                 LocationType.RiverBank,
                 New Dictionary(Of ItemType, Integer) From
                 {
-                    {ItemType.None, 1}
+                    {ItemType.None, 5},
+                    {ItemType.ClayLump, 1}
                 }
             }
         }
