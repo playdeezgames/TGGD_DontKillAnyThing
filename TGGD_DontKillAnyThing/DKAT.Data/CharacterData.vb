@@ -20,7 +20,7 @@
         End Using
         Return LastInsertRowId
     End Function
-    Function Clear(characterId As Long)
+    Sub Clear(characterId As Long)
         Initialize()
         CharacteristicData.ClearForCharacter(characterId)
         CounterData.ClearForCharacter(characterId)
@@ -29,7 +29,7 @@
             MakeParameter("@CharacterId", characterId))
             command.ExecuteNonQuery()
         End Using
-    End Function
+    End Sub
     Function ReadLocation(characterId As Long) As Long?
         Initialize()
         Using command = CreateCommand(
