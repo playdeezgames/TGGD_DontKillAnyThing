@@ -20,6 +20,16 @@
         End Using
         Return LastInsertRowId
     End Function
+    Function Clear(characterId As Long)
+        Initialize()
+        CharacteristicData.ClearForCharacter(characterId)
+        CounterData.ClearForCharacter(characterId)
+        Using command = CreateCommand(
+            "DELETE FROM [Characters] WHERE [CharacterId]=@CharacterId;",
+            MakeParameter("@CharacterId", characterId))
+            command.ExecuteNonQuery()
+        End Using
+    End Function
     Function ReadLocation(characterId As Long) As Long?
         Initialize()
         Using command = CreateCommand(

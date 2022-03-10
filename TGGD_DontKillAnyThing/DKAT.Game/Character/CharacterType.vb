@@ -73,7 +73,7 @@ Public Module CharacterTypeExtension
             Case CharacterType.Player, CharacterType.None
                 Return AttackReaction.DoNothing
             Case CharacterType.Bandit
-                Return AttackReaction.RunAway
+                Return AttackReaction.DoNothing 'RunAway
             Case Else
                 Throw New NotImplementedException
         End Select

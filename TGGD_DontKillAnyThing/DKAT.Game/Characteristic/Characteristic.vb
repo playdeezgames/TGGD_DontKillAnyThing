@@ -38,6 +38,23 @@ Public Class Characteristic
         End Get
     End Property
     Function Roll() As Long
-        Return FromDice(2, 6) + Modifier
+        Dim generated = FromDice(2, 6) - 8 + Modifier
+        Dim result = generated \ 5
+        If generated Mod 5 <> 0 Then
+            If result < 0 Then
+                result -= 1
+            Else
+                result += 1
+            End If
+        End If
+        Return result
     End Function
+    Sub ChangeDelta(change As Long)
+        Dim base = CharacteristicData.ReadBase(Id, CharacteristicType).Value
+        Dim delta = CharacteristicData.ReadDelta(Id, CharacteristicType).Value + change
+        If delta < -base Then
+            delta = -base
+        End If
+        CharacteristicData.Write(Id, CharacteristicType, base, delta)
+    End Sub
 End Class
