@@ -124,4 +124,23 @@ Public Class Character
             Return GetCounter(CounterType.Kills) > 0
         End Get
     End Property
+    ReadOnly Property Inventory As Inventory
+        Get
+            Dim inventoryId = CharacterInventoryData.Read(Id)
+            If Not inventoryId.HasValue Then
+                inventoryId = InventoryData.Create
+                CharacterInventoryData.Write(Id, inventoryId.Value)
+            End If
+            Return New Inventory(inventoryId.Value)
+        End Get
+    End Property
+    Function Forage() As String
+        Dim itemType = Location.GenerateForage()
+        If itemType.HasValue Then
+            Dim item = New Item(ItemData.Create(itemType.Value))
+            Inventory.Add(item)
+            Return $"You find {itemType.Value.Name}!"
+        End If
+        Return "You find nothing!"
+    End Function
 End Class

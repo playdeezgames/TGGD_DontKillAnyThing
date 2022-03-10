@@ -22,6 +22,7 @@
     End Function
     Sub Clear(characterId As Long)
         Initialize()
+        CharacterInventoryData.Clear(characterId)
         CharacteristicData.ClearForCharacter(characterId)
         CounterData.ClearForCharacter(characterId)
         Using command = CreateCommand(

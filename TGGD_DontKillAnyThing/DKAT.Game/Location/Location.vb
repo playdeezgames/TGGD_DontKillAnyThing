@@ -61,4 +61,57 @@ Public Class Location
                              End Function).ToList
         End Get
     End Property
+    Private forageGenerators As New Dictionary(Of LocationType, Dictionary(Of ItemType, Integer)) From
+        {
+            {
+                LocationType.Desert,
+                New Dictionary(Of ItemType, Integer) From
+                {
+                    {ItemType.None, 1}
+                }
+            },
+            {
+                LocationType.Field,
+                New Dictionary(Of ItemType, Integer) From
+                {
+                    {ItemType.None, 1}
+                }
+            },
+            {
+                LocationType.Forest,
+                New Dictionary(Of ItemType, Integer) From
+                {
+                    {ItemType.None, 1}
+                }
+            },
+            {
+                LocationType.Mountain,
+                New Dictionary(Of ItemType, Integer) From
+                {
+                    {ItemType.None, 1}
+                }
+            },
+            {
+                LocationType.Pasture,
+                New Dictionary(Of ItemType, Integer) From
+                {
+                    {ItemType.None, 1}
+                }
+            },
+            {
+                LocationType.RiverBank,
+                New Dictionary(Of ItemType, Integer) From
+                {
+                    {ItemType.None, 1}
+                }
+            }
+        }
+    Function GenerateForage() As ItemType?
+        Dim generator = forageGenerators(LocationType)
+        Dim result = RNG.FromGenerator(generator)
+        If result = ItemType.None Then
+            Return Nothing
+        End If
+        Return result
+    End Function
 End Class

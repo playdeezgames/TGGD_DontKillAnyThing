@@ -58,6 +58,10 @@ Module InPlay
         Next
         MessageBox.Query("Characteristics:", builder.ToString(), "Ok")
     End Sub
+    Private Sub Forage()
+        Dim character As New PlayerCharacter
+        MessageBox.Query("Forage Result:", character.Forage, "Ok")
+    End Sub
     Private Sub UpdateActions()
         Dim actions As New List(Of InPlayAction)
         Dim character As New PlayerCharacter()
@@ -69,6 +73,9 @@ Module InPlay
         For Each door In doors
             actions.Add(New InPlayAction($"Go {door.Direction.Name}", MoveDirection(door.Direction)))
         Next
+        If Not npcs.Any Then
+            actions.Add(New InPlayAction("Forage", AddressOf Forage))
+        End If
         actions.Add(New InPlayAction("Characteristics...", AddressOf ShowCharacteristics))
         actionMenu.SetSource(actions)
     End Sub
