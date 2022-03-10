@@ -93,14 +93,17 @@ Public Class Character
         Dim defendRoll = enemy.RollDefend()
         If attackRoll >= 0 AndAlso attackRoll > defendRoll Then
             builder.AppendLine($"{CharacterType.Name} {CharacterType.HitVerb} {enemy.CharacterType.Name}")
+            Game.Play(Sfx.Hit)
             Dim damage = RollDamage()
             enemy.TakeDamage(damage)
             If enemy.IsDead Then
+                Game.Play(Sfx.Kill)
                 AddKill()
                 builder.AppendLine($"{CharacterType.Name} {CharacterType.KillVerb} {enemy.CharacterType.Name}")
                 enemy.Destroy()
             End If
         Else
+            Game.Play(Sfx.Miss)
             builder.AppendLine($"{CharacterType.Name} {CharacterType.MissVerb} {enemy.CharacterType.Name}")
         End If
         Select Case enemy.CharacterType.DetermineReaction
