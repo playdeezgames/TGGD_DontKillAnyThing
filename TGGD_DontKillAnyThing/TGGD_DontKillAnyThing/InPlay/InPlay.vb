@@ -40,9 +40,14 @@ Module InPlay
                    Dim character As New PlayerCharacter
                    Dim npc As New Character(characterId)
                    Dim attackResult = character.Attack(npc)
-                   MessageBox.ErrorQuery("HUZZAH!", attackResult, "Ok")
-                   UpdateOutput()
-                   UpdateActions()
+                   If character.HasKilled Then
+                       MessageBox.ErrorQuery("Game Over!", attackResult, "Ok")
+                       Application.RequestStop()
+                   Else
+                       MessageBox.ErrorQuery("HUZZAH!", attackResult, "Ok")
+                       UpdateOutput()
+                       UpdateActions()
+                   End If
                End Sub
     End Function
     Private Sub UpdateActions()

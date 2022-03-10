@@ -8,7 +8,7 @@ End Enum
 Public Module CharacterTypeExtension
     Private ReadOnly characterTypeGenerator As New Dictionary(Of CharacterType, Integer) From
         {
-            {CharacterType.None, 1},'18},
+            {CharacterType.None, 18},
             {CharacterType.Bandit, 1}
         }
     Function GenerateCharacterType() As CharacterType
@@ -73,7 +73,7 @@ Public Module CharacterTypeExtension
             Case CharacterType.Player, CharacterType.None
                 Return AttackReaction.DoNothing
             Case CharacterType.Bandit
-                Return AttackReaction.DoNothing 'RunAway
+                Return AttackReaction.RunAway
             Case Else
                 Throw New NotImplementedException
         End Select

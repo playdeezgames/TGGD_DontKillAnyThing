@@ -116,4 +116,9 @@ Public Class Character
                                                                          End Function))
         MoveDirection(RNG.FromGenerator(directions))
     End Sub
+    ReadOnly Property HasKilled As Boolean
+        Get
+            Return GetCounter(CounterType.Kills) > 0
+        End Get
+    End Property
 End Class

@@ -27,7 +27,7 @@
             "SELECT [Value] FROM [Counters] WHERE [CharacterId]=@CharacterId AND [CounterType]=@CounterType;",
             MakeParameter("@CharacterId", characterId),
             MakeParameter("@CounterType", counterType))
-            command.ExecuteNonQuery()
+            Return ExecuteScalar(Of Long)(command)
         End Using
     End Function
     Sub ClearForCharacter(characterId As Long)
