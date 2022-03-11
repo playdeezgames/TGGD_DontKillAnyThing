@@ -32,11 +32,9 @@ Public Module Game
     End Sub
     Private Sub FinishBanditTurn(character As Character, npc As Character, builder As StringBuilder)
         If Not character.Inventory.IsEmpty Then
-            If npc.GetCharacteristic(CharacteristicType.Dexterity).Roll() > character.GetCharacteristic(CharacteristicType.Dexterity).Roll() Then
-                Dim item = RNG.FromList(character.Inventory.Items)
-                npc.Inventory.Add(item)
-                builder.AppendLine($"{npc.CharacterType.Name} {npc.CharacterType.StealVerb} {item.ItemType.Name} from {character.CharacterType.Name}")
-            End If
+            Dim item = RNG.FromList(character.Inventory.Items)
+            npc.Inventory.Add(item)
+            builder.AppendLine($"{npc.CharacterType.Name} {npc.CharacterType.StealVerb} {item.ItemType.Name} from {character.CharacterType.Name}")
         End If
     End Sub
     Private Sub FinishTurn(character As Character, npc As Character, builder As StringBuilder)
