@@ -1,3 +1,4 @@
+Imports System.Text
 Imports DKAT.Data
 Public Module Game
     Private Sub SpawnLocation(fromLocationId As Long, direction As Direction)
@@ -29,4 +30,30 @@ Public Module Game
     Sub Play(sfx As Sfx)
         RaiseEvent PlaySfx(sfx)
     End Sub
+    Private Sub FinishBanditTurn(character As Character, npc As Character, builder As StringBuilder)
+        If Not character.Inventory.IsEmpty Then
+            If npc.GetCharacteristic(CharacteristicType.Dexterity).Roll() > character.GetCharacteristic(CharacteristicType.Dexterity).Roll() Then
+                Dim item = RNG.FromList(character.Inventory.Items)
+                npc.Inventory.Add(item)
+                builder.AppendLine($"{npc.CharacterType.Name} {npc.CharacterType.StealVerb} {item.ItemType.Name} from {character.CharacterType.Name}")
+            End If
+        End If
+    End Sub
+    Private Sub FinishTurn(character As Character, npc As Character, builder As StringBuilder)
+        Select Case npc.CharacterType
+            Case CharacterType.Bandit
+                FinishBanditTurn(character, npc, builder)
+            Case Else
+                Throw New NotImplementedException
+        End Select
+    End Sub
+    Function FinishTurn() As String
+        Dim builder As New StringBuilder
+        Dim character As New PlayerCharacter
+        Dim npcs = character.Location.NonplayerCharacters
+        For Each npc In npcs
+            FinishTurn(character, npc, builder)
+        Next
+        Return builder.ToString()
+    End Function
 End Module

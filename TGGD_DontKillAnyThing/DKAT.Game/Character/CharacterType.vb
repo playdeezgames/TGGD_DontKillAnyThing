@@ -8,7 +8,7 @@ End Enum
 Public Module CharacterTypeExtension
     Private ReadOnly characterTypeGenerator As New Dictionary(Of CharacterType, Integer) From
         {
-            {CharacterType.None, 18},
+            {CharacterType.None, 5},
             {CharacterType.Bandit, 1}
         }
     Function GenerateCharacterType() As CharacterType
@@ -49,6 +49,14 @@ Public Module CharacterTypeExtension
             Return "kill"
         Else
             Return "kills"
+        End If
+    End Function
+    <Extension()>
+    Function StealVerb(characterType As CharacterType) As String
+        If characterType = CharacterType.Player Then
+            Return "steal"
+        Else
+            Return "steals"
         End If
     End Function
     <Extension()>

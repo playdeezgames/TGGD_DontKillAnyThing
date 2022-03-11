@@ -30,6 +30,9 @@ Module RNG
         End While
         Return total
     End Function
+    Function FromList(Of TItem)(items As List(Of TItem)) As TItem
+        Return items(FromRange(0, items.Count - 1))
+    End Function
 End Module
 Module DictionaryExtensions
     <Extension()>

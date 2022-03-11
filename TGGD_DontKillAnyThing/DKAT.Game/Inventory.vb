@@ -15,6 +15,11 @@ Public Class Inventory
                                                                  End Function).ToList
         End Get
     End Property
+    ReadOnly Property IsEmpty As Boolean
+        Get
+            Return Not Items.Any
+        End Get
+    End Property
     ReadOnly Property StackedItems As Dictionary(Of ItemType, List(Of Item))
         Get
             Dim stacks = Items.GroupBy(Function(item)

@@ -38,6 +38,10 @@ Module InPlay
     Private Function MoveDirection(direction As Direction) As Action
         Return Sub()
                    Dim character As New PlayerCharacter
+                   Dim turnResult = Game.FinishTurn()
+                   If Not String.IsNullOrEmpty(turnResult) Then
+                       MessageBox.ErrorQuery("AVAST!", turnResult, "Ok")
+                   End If
                    character.MoveDirection(direction)
                    UpdateOutput()
                    UpdateActions()
