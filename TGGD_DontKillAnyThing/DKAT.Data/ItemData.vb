@@ -16,4 +16,12 @@
         End Using
         Return LastInsertRowId
     End Function
+    Function ReadItemType(itemId As Long) As Long?
+        Initialize()
+        Using command = CreateCommand(
+            "SELECT [ItemType] FROM [Items] WHERE [ItemId]=@ItemId;",
+            MakeParameter("@ItemId", itemId))
+            Return ExecuteScalar(Of Long)(command)
+        End Using
+    End Function
 End Module

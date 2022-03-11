@@ -10,6 +10,14 @@ Module InPlay
         Dim builder As New StringBuilder
         Dim character As New PlayerCharacter()
         builder.AppendLine($"Yer alive, and you ain't killed anything yet!")
+        Dim stackedItems = character.Inventory.StackedItems
+        If stackedItems.Any Then
+            builder.AppendLine("Items:")
+            builder.AppendJoin(", ", stackedItems.Select(Function(entry)
+                                                             Return $"{entry.Value.Count}x {entry.Key.Name}"
+                                                         End Function))
+            builder.AppendLine()
+        End If
         Dim location = character.Location
         builder.AppendLine($"Terrain: {location.LocationType.Name}")
         Dim npcs = location.NonplayerCharacters
@@ -61,6 +69,8 @@ Module InPlay
     Private Sub Forage()
         Dim character As New PlayerCharacter
         MessageBox.Query("Forage Result:", character.Forage, "Ok")
+        UpdateOutput()
+        UpdateActions()
     End Sub
     Private Sub UpdateActions()
         Dim actions As New List(Of InPlayAction)
